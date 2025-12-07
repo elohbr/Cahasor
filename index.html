@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAHASOR Cafeteria</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fdfaf7;
+      color: #3e2a1e;
+    }
+
+    /* Barra de navegação */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #4B2A18;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    nav .logo img {
+      height: 45px;       /* Ajuste do tamanho da logo na barra */
+      width: auto;        /* Mantém a proporção */
+      margin-right: 10px; /* Espaço entre a imagem e eventual texto */
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Espaço para compensar nav fixa */
+    .spacer {
+      height: 70px;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: #E6D0B5;
+    }
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+      color: #4B2A18;
+    }
+    .hero p {
+      font-size: 20px;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #3e2a1e;
+    }
+
+    section {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    section h2 {
+      font-size: 28px;
+      color: #4B2A18;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    section p {
+      font-size: 16px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+/* Cardápio em destaque */
+  .menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+.menu-item {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+   /* Adicionado: Flexbox para alinhar conteúdo verticalmente, se necessário */
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+}
+
+/* NOVO CSS PARA A IMAGEM */
+.menu-item img {
+    width: 100%; /* A imagem preenche a largura do container do item */
+    max-width: 180px; /* Limita o tamanho máximo da imagem */
+    height: 180px; /* Define altura fixa para que fique quadrada (ou use 'auto' para manter proporção) */
+    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer (cortando se necessário) */
+    border-radius: 10px; /* Mantém o canto arredondado da caixa, ou use '0' para quadrado sem arredondamento */
+    margin-bottom: 10px; /* Espaço entre a imagem e o nome do produto */
+}
+
+/* Os outros estilos de .menu-item continuam */
+.menu-item h3 {
+    margin: 10px 0;
+    color: #4B2A18;
+}
+.menu-item span {
+    font-weight: bold;
+    color: #3e2a1e;
+}
+
+    /* Promoções */
+    .promocoes {
+      background: #f9efe4;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    /* Avaliacoes */
+    .avaliacoes {
+      display: grid;
+      gap: 20px;
+    }
+    .avaliacoes {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .avaliacoes p {
+      font-style: italic;
+    }
+    .avaliacoes span {
+      display: block;
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    /* Newsletter */
+    .newsletter {
+      text-align: center;
+    }
+    .newsletter input {
+      padding: 10px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .newsletter button {
+      padding: 10px 15px;
+      border: none;
+      background: #4B2A18;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: #4B2A18;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+  <style>
+/* ... seu CSS anterior ... */
+
+/* ... demais estilos de .perfil, .conteudo, .topo, .nome, .avaliacao, .texto ... */
+
+  .depoimentos-container {
+       /* Define o container como um flex container */
+      display: flex;
+    /* Adiciona espaço entre os depoimentos */
+      gap: 20px;
+    /* Permite que os depoimentos quebrem para a próxima linha em telas menores */
+     flex-wrap: wrap;
+    /* Centraliza os depoimentos horizontalmente no container */
+     justify-content: center;
+    /* Adicionado padding para garantir espaço em volta */
+     padding: 20px 0; 
+}
+
+.depoimento {
+    width: 280px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    padding-left: 50px; /* espaço para compensar a foto */
+    display: flex;
+    gap: 15px;
+    position: relative; /* Necessário para a foto ficar "por cima" */
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.25);
+    margin-top: 35px;
+}
+
+/* Foto do usuário no depoimento */
+.perfil {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden; /* Faz a imagem ficar dentro do círculo */
+    position: absolute;
+    top: -25px;  /* Move para cima para ficar igual ao modelo */
+    left: -10px; /* Ajuste lateral */
+    border: 4px solid white; /* Borda branca igual ao cartão */
+    box-shadow: 0px 3px 8px rgba(0,0,0,0.25);
+}
+
+.perfil img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem não distorça */
+}
+
+  </style>
+
+</head>
+<body>
+
+  <!-- Barra de navegação -->
+  <nav>
+  <div class="logo">
+    <img src="cahasor_sem_fundo.png" alt="Logo CAHASOR">
+  </div>
+    <ul>
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#sobre">Sobre Nós</a></li>
+      <li><a href="#cardapio">Cardápio</a></li>
+      <li><a href="#promocoes">Promoções</a></li>
+      <li><a href="#avaliacoes">Avaliações</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <div class="spacer"></div>
+
+  <!-- Hero -->
+  <section id="inicio" class="hero">
+    <h1>Bem-vindo à CAHASOR</h1>
+    <p>Mais que uma cafeteria: um espaço de aconchego, leitura e solidariedade.</p>
+  </section>
+
+  <!-- Sobre nós -->
+  <section id="sobre">
+    <h2>Sobre Nós</h2>
+    <p>
+      A CAHASOR nasceu com o propósito de unir o sabor do café, a paixão pela leitura e a causa animal. 
+      Somos um espaço para todas as idades, onde você pode relaxar, estudar, trabalhar ou se reunir com amigos, 
+      enquanto apoia projetos de adoção animal e desfruta de momentos especiais.
+    </p>
+    <p>📌Rua Graciosa, 141 - Centro, Diadema - SP, 09910-660</p>
+  </section>
+
+  <!-- Cardápio em destaque -->
+<section id="cardapio">
+    <h2>Cardápio</h2>
+    <div class="menu">
+
+                <div class="menu-item">
+            <img src="cafeexpresso.png" alt="Foto de um café expresso">
+            <h3>Expresso</h3>
+            <span>R$ 5,00</span>
+       </div>
+  
+                <div class="menu-item">
+            <img src="cafeleite.png" alt="Foto de um café c/ leite">
+            <h3>Café c/ Leite</h3>
+            <span>R$ 8,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="cappucino.png" alt="Foto de um cappuccino">
+            <h3>Cappuccino</h3>
+            <span>R$ 8,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="cafegelado.png" alt="Foto de um café gelado">
+            <h3>Café Gelado</h3>
+            <span>R$ 9,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="frappucino.png" alt="Foto de um frappé">
+            <h3>Frappucino</h3>
+            <span>R$ 10,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="cafesorvete.png" alt="Foto de um café c/ sorvete">
+            <h3>Café c/ Sorvete</h3>
+            <span>R$ 10,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="chocolate.png" alt="Foto de um chocolate quente">
+            <h3>Chocolate Quente</h3>
+            <span>R$ 10,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="chocolatecremoso.png" alt="Foto de um chocolate cremoso">
+            <h3>Chocolate Quente Cremoso</h3>
+            <span>R$ 10,00</span>
+        </div>
+
+                 <div class="menu-item">
+            <img src="mochaespecial.png" alt="Foto de um mocha especial">
+            <h3>Mocha Especial (avelã/caramelo)</h3>
+            <span>R$ 10,00</span>
+        </div>
+
+                 <div class="menu-item">
+            <img src="pinklatte.png" alt="Foto de um pink latte">
+            <h3>Pink Latte</h3>
+            <span>R$ 10,00</span>
+        </div>
+
+                 <div class="menu-item">
+            <img src="bluelatte.png" alt="Foto de um blue latte">
+            <h3>Blue Latte</h3>
+            <span>R$ 10,00</span>
+        </div>        
+
+                 <div class="menu-item">
+            <img src="cha.png" alt="Foto de um chá">
+            <h3>Chá Gelado</h3>
+            <span>R$ 10,00</span>
+        </div>
+
+                 <div class="menu-item">
+            <img src="suco.png" alt="Foto de um suco">
+            <h3>Suco (sabor a escolher)</h3>
+            <span>R$ 10,00</span>
+        </div>
+
+                 <div class="menu-item">
+            <img src="refri.png" alt="Foto de um refri">
+            <h3>Refrigerante (sabor a escolher)</h3>
+            <span>R$ 10,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="paodequeijo.png" alt="Foto de um pão de queijo">
+            <h3>Pão de Queijo</h3>
+            <span>R$ 9,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="paoqueijocatupiry.png" alt="Foto de um pão de queijo c/ catupiry">
+            <h3>Pão de Queijo c/ Catupiry</h3>
+            <span>R$ 9,00</span>
+        </div> 
+
+                <div class="menu-item">
+            <img src="mistoquente.png" alt="Foto de um msito quente">
+            <h3>Misto quente</h3>
+            <span>R$ 9,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="coxinha.png" alt="Foto de uma coxinha">
+            <h3>Coxinha</h3>
+            <span>R$ 9,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="coxinhacatupiry.png" alt="Foto de uma coxinha c/ catupiry">
+            <h3>Coxinha c/ Catupiry</h3>
+            <span>R$ 9,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="esfiha.png" alt="Foto de uma esfiha">
+            <h3>Esfiha</h3>
+            <span>R$ 9,00</span>
+        </div>  
+
+                <div class="menu-item">
+            <img src="paodebatata.png" alt="Foto de um pão de batata">
+            <h3>Pão de Batata</h3>
+            <span>R$ 9,00</span>
+        </div>  
+
+                <div class="menu-item">
+            <img src="fogazza.png" alt="Foto de um fogazza">
+            <h3>Fogazza</h3>
+            <span>R$ 9,00</span>
+        </div>  
+
+                <div class="menu-item">
+            <img src="sanduichenatural.png" alt="Foto de um sanduiche">
+            <h3>Sanduíche Natural</h3>
+            <span>R$ 9,00</span>
+        </div>     
+        
+                <div class="menu-item">
+            <img src="brownie.png" alt="Foto de um brownie">
+            <h3>Brownie</h3>
+            <span>R$ 9,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="cookie.png" alt="Foto de um cookie">
+            <h3>Cookie</h3>
+            <span>R$ 9,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="bolo.png" alt="Foto de um bolo">
+            <h3>Fatia de Bolo</h3>
+            <span>R$ 9,00</span>
+        </div>
+
+                <div class="menu-item">
+            <img src="waffle.png" alt="Foto de um waffle">
+            <h3>Waffle</h3>
+            <span>R$ 9,00</span>
+        </div>              
+
+                <div class="menu-item">
+            <img src="biscoitinhas.png" alt="Foto de um biscoito">
+            <h3>Biscoitinhos de Patinhas</h3>
+            <span>R$ 9,00</span>
+        </div>        
+    </div>
+</section>
+
+  <!-- Promoções -->
+  <section id="promocoes">
+    <h2>Promoções e Novidades</h2>
+    <div class="promocoes">
+      <p>☕Siga nosso intagram: @cahasor</p>
+      <p>👨‍👩‍👧‍👦Marcar 3 amigos no nosso último post</p>
+      <p>🎉Sorteio + Brinde🎉</p>
+    </div>
+  </section>
+
+  <!-- Depoimentos -->
+<section id="avaliacoes">
+    <h2>Avaliações</h2>
+
+    <div class="depoimentos-container">
+
+        <div class="depoimento">
+            <div class="perfil">
+                <img src="clarasilva.png.png" alt="Foto do usuário">
+            </div>
+            <div class="conteudo">
+                <div class="topo">
+                    <span class="nome">clara_silva</span>
+                    <span class="avaliacao">5.0 ⭐⭐⭐⭐⭐</span>
+                </div>
+                <p class="texto">
+                    Ótimo atendimento e um ambiente super aconchegante. Adoro passar minhas tardes aqui lendo e aproveitando o cheirinho de café. Sem falar na iniciativa linda da adoção de pets!
+                </p>
+            </div>
+        </div>
+
+        <div class="depoimento">
+            <div class="perfil">
+                <img src="roberto32.png.png" alt="Foto do usuário">
+            </div>
+            <div class="conteudo">
+                <div class="topo">
+                    <span class="nome">roberto_32</span>
+                    <span class="avaliacao">5.0 ⭐⭐⭐⭐⭐</span>
+                </div>
+                <p class="texto">
+                    Graças a CAHASOR Conheci meu melhor amigo (um cachorrinho lindo).  Além de ter um espaço maravilhoso para trabalhar e relaxar. Cinco estrelas com certeza!
+                </p>
+            </div>
+        </div>
+
+        <div class="depoimento">
+            <div class="perfil">
+                <img src="dudinhars.png.png" alt="Foto do usuário">
+            </div>
+            <div class="conteudo">
+                <div class="topo">
+                    <span class="nome">dudinhaa.rs</span>
+                    <span class="avaliacao">5.0 ⭐⭐⭐⭐⭐</span>
+                </div>
+                <p class="texto">
+                  A CAHASOR é meu refúgio favorito! O café é delicioso, a seleção de livros é incrível e ainda posso ajudar animaizinhos sem lar. Um pedacinho de paz no meio da cidade.
+                </p>
+            </div>
+        </div>        
+
+        <div class="depoimento">
+            <div class="perfil">
+                <img src="alicepedro.png" alt="Foto do usuário">
+            </div>
+            <div class="conteudo">
+                <div class="topo">
+                    <span class="nome">alicepedro.1922</span>
+                    <span class="avaliacao">3.0 ⭐⭐⭐☆☆</span>
+                </div>
+                <p class="texto">
+                    O ambiente é super agradável, pena que o café não é um dos melhores,
+                    mas pretendo voltar para ter certeza.
+                </p>
+            </div>
+        </div>
+
+        <div class="depoimento">
+            <div class="perfil">
+                <img src="sosopereira.png" alt="Foto do usuário">
+            </div>
+            <div class="conteudo">
+                <div class="topo">
+                    <span class="nome">soso_pereira03</span>
+                    <span class="avaliacao">2.0 ⭐⭐☆☆☆</span>
+                </div>
+                <p class="texto">
+                    Gostei do biscoito de patinhas, é realmente muito bom, mas o atendimento deixou a desejar, estavam atendendo com pressa e sem muita paciência.
+                </p>
+            </div>
+        </div>
+
+        <div class="depoimento">
+            <div class="perfil">
+                <img src="joaogabriel.png" alt="Foto do usuário">
+            </div>
+            <div class="conteudo">
+                <div class="topo">
+                    <span class="nome">joao.gabriel</span>
+                    <span class="avaliacao">3.0 ⭐⭐⭐☆☆</span>
+                </div>
+                <p class="texto">
+                    O ambiente é incrível, adoro ir lá para estudar, mas o café com leite sempre vem meio gelado, isso acaba sendo bem desagradável.
+                </p>
+            </div>
+        </div>
+
+    </div> </section>
+
+<!-- Contato -->
+<section id="contato">
+  <h2>Fale Conosco</h2>
+  <p>Email: cahasor@gmail.com.br | WhatsApp: (11) 99999-9999</p>
+
+  <div class="newsletter">
+    <p>Assine nossa newsletter para receber novidades:</p>
+
+    <label for="txt_email">Email:</label>
+    <input type="email" id="txt_email" name="txt_email" required placeholder="Digite seu email">
+
+    <button id="btnInscrever">Inscrever-se</button>
+  </div>
+</section>
+
+<script>
+  document.getElementById("btnInscrever").addEventListener("click", function () {
+    const emailInput = document.getElementById("txt_email");
+
+    if (!emailInput.value.trim()) {
+      alert("Por favor, preencha o campo de email.");
+      emailInput.focus();
+    } else {
+      alert("Email cadastrado com sucesso!");
+      emailInput.value = ""; // limpa o campo
+    }
+  });
+</script>
+
+  <footer>
+    <p>© 2025 CAHASOR Cafeteria | Todos os direitos reservados</p>
+  </footer>
+
+</body>
+</html>
